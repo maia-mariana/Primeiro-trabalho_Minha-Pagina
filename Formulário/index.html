@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno - Lab07 Checkpoint</title>
+</head>
+
+<body>
+
+    <main>
+        <header>
+            <h1>Cadastro de Aluno Checkpoint</h1>
+        </header>
+
+        <form id="form-aluno" action="#" method="post">
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+            </div><br>
+
+            <div>
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+            </div><br>
+
+            <div>
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" inputmode="numeric" pattern="\d{11}" maxlength="11"
+                    placeholder="Somente números" aria-describedby="cpf-dica" required>
+                <span id="cpf-dica">(11 dígitos sem pontos ou traços)</span>
+            </div><br>
+
+            <div>
+                <label for="nascimento">Data de Nascimento:</label>
+                <input type="date" id="nascimento" name="nascimento" required>
+            </div><br>
+
+            <div>
+                <label for="curso">Curso:</label>
+                <select id="curso" name="curso" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="ux">UX Design</option>
+                    <option value="calc2">Cálculo 2</option>
+                    <option value="web">Desenvolvimento Web</option>
+                    <option value="ageis">Métodos Ágeis</option>
+                    <option value="dt">Design Thinking</option>
+                </select>
+            </div><br>
+
+            <fieldset>
+                <legend>Turno</legend>
+
+                <input type="radio" id="manha" name="turno" value="manha" required>
+                <label for="manha">Manhã</label>
+
+                <input type="radio" id="tarde" name="turno" value="tarde">
+                <label for="tarde">Tarde</label>
+
+                <input type="radio" id="noite" name="turno" value="noite">
+                <label for="noite">Noite</label>
+            </fieldset> <br>
+
+            <div>
+                <input type="checkbox" id="termos" name="termos" required>
+                <label for="termos">Aceito os termos e condições</label>
+            </div><br>
+
+            <div>
+                <button type="submit">Enviar</button>
+                <button type="reset">Limpar</button>
+            </div>
+        </form>
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>© 2026 mariana _maia - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+
+</html>
