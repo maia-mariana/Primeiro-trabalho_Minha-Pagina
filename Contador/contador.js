@@ -32,6 +32,5 @@ function atualizaValor(valor) {
 
 function atualizaMensagem(texto) {
   const mensagem = document.querySelector("#mensagem");
-  // CORRIGIDO: de elementoMensagem para mensagem
   mensagem.textContent = texto; 
 }
