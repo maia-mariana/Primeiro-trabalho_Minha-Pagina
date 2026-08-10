@@ -1,0 +1,47 @@
+# Documento de Requisitos Técnicos, Plataforma Mobile Bulbe Energia
+
+## Identificação
+
+- **Projeto:** Plataforma Mobile Bulbe Energia (Inovação na Jornada do Cliente)[cite: 1]
+- **Empresa parceira:** Bulbe Energia[cite: 1]
+- **Equipe:** Squad Matrix[cite: 1]
+- **Integrantes:** Augusto Gama, Felipe Lara, Fernanda Dutra, Leandro Dias, Mariana Maia e Rafael Bentes[cite: 1]
+- **Data:** 10/08/2026[cite: 1]
+- **Sprint / Etapa:** Sprint 1, Elicitação[cite: 1]
+
+## Como este documento foi construído
+
+A partir da engenharia reversa das interfaces desenvolvidas no frontend (Projeto Ciência de Dados I), mapeamos as necessidades de infraestrutura, lógica de negócios e persistência do backend[cite: 1]. Analisamos visualmente o fluxo de onboarding, os estados de simulação (autenticada e pública), a régua de homologação da distribuidora e a vitrine de benefícios para definir os endpoints e critérios não funcionais da API[cite: 1].
+
+## Tabela de Requisitos
+
+| ID | Funcionalidade do Frontend (Projeto I) | Requisito Técnico Derivado (Backend) | Tipo | Prioridade |
+|---|---|---|---|---|
+| RF-01 | Simulador de Economia (Aberto) | Disponibilizar serviço público `POST /api/v1/simulator/calculate` para cálculo instantâneo de estimativa de desconto sem autenticação previa. | RF | Alta |
+| RF-02 | Acompanhamento do Processo de Homologação | Prover endpoint `GET /api/v1/homologation/status` detalhando o andamento nas 4 etapas burocráticas (distribuídas entre validação Bulbe e trâmite CEMIG). | RF | Alta |
+| RF-03 | Formulário de Adesão e Upload de Conta de Luz | Receber via `POST /api/v1/adhesion` o envio dos dados cadastrais e o arquivo da fatura de energia para processamento. | RF | Alta |
+| RF-04 | Ecossistema de Benefícios ("Impulsione sua primeira fatura") | Integrar endpoint `GET /api/v1/benefits` para listar parceiros de cashback/desconto e registrar transações de resgate pelo usuário. | RF | Alta |
+| RF-05 | Histórico de Simulações do Usuário | Disponibilizar endpoint `GET /api/v1/simulator/history` para recuperar os cálculos e simulações salvas anteriormente pelo cliente logado. | RF | Média |
+| RF-06 | Conteúdo do Onboarding e Suporte Contextual | Entregar via `GET /api/v1/onboarding` e `GET /api/v1/help/tooltips` as explicações das etapas da geração distribuída e termos regulatórios trazidos pelo mascote Bulbinho. | RF | Média |
+| RNF-01 | Desempenho e Tempo de Resposta | Garantir que a API responda às requisições de simulação e status com latência máxima abaixo de 400ms. | RNF | Alta |
+| RNF-02 | Segurança de Dados e Conformidade LGPD | Implementar comunicação segura via HTTPS, proteção de arquivos sensíveis em storage isolado e autorização via tokens JWT. | RNF | Alta |
+| RNF-03 | Otimização para Dispositivos de Baixa Performance | Compactar a transmissão de dados (payloads JSON enxutos) visando o bom desempenho em celulares Android de entrada e conexões 3G/4G. | RNF | Média |
+
+## Legenda
+
+- **RF, Requisito Funcional:** descreve o que o sistema deve fazer, uma função ou ação esperada[cite: 1].
+- **RNF, Requisito Não Funcional:** descreve como o sistema deve se comportar, uma qualidade ou restrição técnica[cite: 1].
+- **Prioridade Alta:** essencial para o funcionamento básico do sistema[cite: 1].
+- **Prioridade Média:** importante, mas não bloqueia a primeira entrega[cite: 1].
+- **Prioridade Baixa:** desejável, pode ficar para uma sprint futura[cite: 1].
+
+## Observações
+
+1. **Estratégia de Persistência do Histórico de Simulações (`RF-05`):** Ao analisar a tela do simulador para usuários logados, nota-se a presença de um histórico de simulações com datas anteriores. O backend deve garantir a persistência dessas consultas associadas ao ID do usuário para permitir o acompanhamento da variação de economia estimada ao longo dos meses.
+2. **Arquitetura Aberta vs. Segurança (`RF-01` e `RNF-01`):** A escolha de manter o simulador sem autenticação é vital para a conversão de novos leads. No entanto, para evitar sobrecarga no servidor e garantir o tempo de resposta estipulado de 400ms, o endpoint de cálculo adotará políticas rigorosas de *Rate Limiting* por IP no API Gateway.
+3. **Gestão do Estado Nulo no App (Tela de Pré-Fatura):** As telas do projeto preveem um estado intermediário caso nenhuma fatura tenha sido localizada ou processada ("Oops... Não encontrei nenhuma fatura"). A API deve enviar respostas estruturadas para o frontend identificar esse estado sem gerar exceções de sistema ou telas em branco.
+4. **Proteção da Privacidade e Documentos (`RF-03` e `RNF-02`):** O envio das faturas exige o uso de buckets seguros com links de expiração rápida para visualização. As informações extraídas da conta de luz devem ser anonimizadas ou protegidas seguindo as diretrizes da LGPD para evitar o vazamento de dados fiscais e de endereço dos clientes.
+
+## Próximos passos
+
+Estes requisitos serão utilizados na Aula 04 (Engenharia de Requisitos para APIs) para desenhar o contrato de endpoints da API[cite: 1].
